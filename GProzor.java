@@ -54,6 +54,44 @@ public class GProzor extends JFrame {
       JTextField ime,prezime,jmbg,softv,email,adresa,radnom;  
       JLabel im=new JLabel("Ime"),pr=new JLabel("Prezime"),jmb=new JLabel("JMBG"),em=new JLabel("Email"),rad=new JLabel("Radno Mesto");
       
-  
+     public void populate() {
+    	 ime=new JTextField(20);
+    	 prezime=new JTextField(20);
+    	 
+    	 
+    	 
+    	  file=new JMenu("File");
+    	  edit=new JMenu("Edit");
+    	  help=new JMenu("Help");
+    	  neww=new JMenuItem("New");
+    	  open=new JMenu("Open");
+    	  zap=new JMenuItem("Zaposleni");
+    	  sof=new JMenuItem("Softver");
+    	  open.add(zap);
+    	  open.add(sof);
+    	  exit=new JMenuItem("Exit");
+    	  editt=new JMenuItem("Edit");
+    	  delte=new JMenuItem("Delete");
+    	  about=new JMenuItem("About");
+    	  file.add(neww);
+    	  file.add(open);
+    	  file.add(exit);
+    	  edit.add(editt);
+    	  edit.add(delte);
+    	  help.add(about);
+    	  meni.add(file);
+    	  meni.add(edit);
+    	  meni.add(help);
+    	  this.setJMenuBar(meni);
+    	  
+    	exit.addActionListener(new 	ActionListener() {
+    	    public void actionPerformed(ActionEvent e) {
+    	    	GProzor.this.dispose();
+    	       
+    	    }
+    	});
+    	
+
+
 
 }
