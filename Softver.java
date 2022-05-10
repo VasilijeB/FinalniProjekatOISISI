@@ -11,7 +11,7 @@ public class Softver {
 	private String Modifikatori;
 	private String Formati;
 	private Render render;
-	
+	//alati za animaciju?
 	
 
 }

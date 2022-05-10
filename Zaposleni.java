@@ -26,5 +26,14 @@ public class Zaposleni {
 		Softveri = softveri;
 		this.radnoM = radnoM;
 	}
-
+	public String getIme() {
+		return Ime;
+	}
+	public void setIme(String ime) {
+		Ime = ime;
+	}
+	public String getPrezime() {
+		return Prezime;
+	}
+	
 }

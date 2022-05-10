@@ -36,5 +36,24 @@ public class GProzor extends JFrame {
 	      setVisible(true);
 	      
 	}
+	  ImageIcon ad,ed,del;
+	  JTabbedPane tabbedPane = new JTabbedPane();
+	  JPanel cenpanel = new JPanel(); 
+	  JMenuBar  meni=new JMenuBar();
+	  JMenu file, edit,help,open;  
+      JMenuItem neww, exit, editt, delte,about,zap,sof;  
+      JToolBar toolbar=new JToolBar();
+      
+      JDialog dodajZ;
+      JDialog izmeniZ=new JDialog(this,true);
+      JDialog obrisiZ=new JDialog(this,true);
+      
+      JDialog dodajS=new JDialog(this,true);
+      JDialog izmeniS=new JDialog(this,true);
+      JDialog obrisiS=new JDialog(this,true);
+      JTextField ime,prezime,jmbg,softv,email,adresa,radnom;  
+      JLabel im=new JLabel("Ime"),pr=new JLabel("Prezime"),jmb=new JLabel("JMBG"),em=new JLabel("Email"),rad=new JLabel("Radno Mesto");
+      
+  
 
 }

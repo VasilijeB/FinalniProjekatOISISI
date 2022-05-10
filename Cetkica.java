@@ -12,7 +12,12 @@ public class Cetkica {
 		Namene = namene;
 		this.boje = boje;
 	}
-	
+	public String getNaziv() {
+		return Naziv;
+	}
+	public void setNaziv(String naziv) {
+		Naziv = naziv;
+	}
 	
 
 }

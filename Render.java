@@ -12,7 +12,12 @@ public class Render {
 		Objekti = objekti;
 		Naziv = naziv;
 	}
-
-
+	public String getMaterijali() {
+		return Materijali;
+	}
+	public void setMaterijali(String materijali) {
+		Materijali = materijali;
+	}
+	
 
 }

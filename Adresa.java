@@ -10,6 +10,13 @@ public class Adresa {
 		Ulica = ulica;
 		Grad = grad;
 	}
+	public int getBroj() {
+		return Broj;
+	}
+	public void setBroj(int broj) {
+		Broj = broj;
+	}
+	
 	
 
 }
