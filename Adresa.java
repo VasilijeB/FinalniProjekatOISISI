@@ -16,7 +16,18 @@ public class Adresa {
 	public void setBroj(int broj) {
 		Broj = broj;
 	}
-	
+	public String getUlica() {
+		return Ulica;
+	}
+	public void setUlica(String ulica) {
+		Ulica = ulica;
+	}
+	public String getGrad() {
+		return Grad;
+	}
+	public void setGrad(String grad) {
+		Grad = grad;
+	}
 	
 
 }
