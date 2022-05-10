@@ -91,7 +91,59 @@ public class GProzor extends JFrame {
     	    }
     	});
     	
+    	neww.addActionListener(new 	ActionListener() {
+    	    public void actionPerformed(ActionEvent e) {
+    	    	
+    	    	dodajZ=new JDialog();
+    	    	dodajZ.setModal(true);
+    	    	dodajZ.setLayout(new GridBagLayout());
+    	    	dodajZ.setSize(500, 500);
+    	    	dodajZ.add(im);
+    	    	dodajZ.add(ime);
+    	    	dodajZ.add(pr);
+    	    	dodajZ.add(prezime);
+    	    	dodajZ.setVisible(true);
+    	       
+    	    }
+    	});
+    	  
+    	  JComponent panel1 = new JPanel();
+    	  tabbedPane.addTab("Zaposleni", panel1);
+    	  JComponent panel2 = new JPanel();
+    	  tabbedPane.addTab("Softver", panel2);
+    	  this.add(tabbedPane);
+    	  
 
+    	  
+    	  JButton adact=new JButton(ad);
+    	  JButton edact=new JButton(ed);
+    	  JButton delact=new JButton(del);
+   
+    	  JPanel statusBar = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+    	   JLabel datum = new JLabel();
+    	   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy.");  
+    	   LocalDateTime now = LocalDateTime.now();  
+    	   datum.setText(dtf.format(now));
+    	   statusBar.add(datum);
+    	   this.add(statusBar,BorderLayout.SOUTH);
+    	
+
+          toolbar.add(adact);  
+          toolbar.add(edact); 
+          toolbar.add(delact);
+          this.add(toolbar,BorderLayout.NORTH);
+          
+    	  
+    	
+      }
+
+     public void entiteti() {
+    	 
+     }
+     
+      public static void  main(String[] args) {
+  		new GProzor();
+  	}
 
 
 }
