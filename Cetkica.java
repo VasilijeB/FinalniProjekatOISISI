@@ -18,6 +18,18 @@ public class Cetkica {
 	public void setNaziv(String naziv) {
 		Naziv = naziv;
 	}
+	public String getNamene() {
+		return Namene;
+	}
+	public void setNamene(String namene) {
+		Namene = namene;
+	}
+	public Color getBoje() {
+		return boje;
+	}
+	public void setBoje(Color boje) {
+		this.boje = boje;
+	}
 	
 
 }

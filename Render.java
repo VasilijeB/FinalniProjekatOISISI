@@ -18,6 +18,24 @@ public class Render {
 	public void setMaterijali(String materijali) {
 		Materijali = materijali;
 	}
-	
+	public String getKamere() {
+		return Kamere;
+	}
+	public void setKamere(String kamere) {
+		Kamere = kamere;
+	}
+	public String getObjekti() {
+		return Objekti;
+	}
+	public void setObjekti(String objekti) {
+		Objekti = objekti;
+	}
+	public String getNaziv() {
+		return Naziv;
+	}
+	public void setNaziv(String naziv) {
+		Naziv = naziv;
+	} 
+
 
 }
