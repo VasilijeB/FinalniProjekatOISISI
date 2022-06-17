@@ -1,19 +1,19 @@
 package projekat;
 
 public class Adresa {
-	private int Broj;
+	private String Broj;
 	private String Ulica;
 	private String Grad;
-	public Adresa(int broj, String ulica, String grad) {
+	public Adresa(String broj, String ulica, String grad) {
 		super();
 		Broj = broj;
 		Ulica = ulica;
 		Grad = grad;
 	}
-	public int getBroj() {
+	public String getBroj() {
 		return Broj;
 	}
-	public void setBroj(int broj) {
+	public void setBroj(String broj) {
 		Broj = broj;
 	}
 	public String getUlica() {
@@ -27,6 +27,10 @@ public class Adresa {
 	}
 	public void setGrad(String grad) {
 		Grad = grad;
+	}
+	@Override
+	public String toString() {
+		return "Adresa: "+Ulica+" "+Broj+" "+Grad;
 	}
 	
 
