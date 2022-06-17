@@ -141,6 +141,18 @@ public class GProzor extends JFrame {
     	 
      }
      
+     public class SRenderer extends JLabel implements ListCellRenderer<Softver> {
+
+ 		@Override
+ 		public Component getListCellRendererComponent(JList<? extends Softver> list, Softver s, int index,
+ 				boolean isSelected, boolean cellHasFocus) {
+ 			ColorIcon ikonica = new ColorIcon(10, 10, s.getCetkice().getBoje());
+ 			setIcon(ikonica);
+ 			setText(s.toString());
+
+ 			return this;
+ 		}
+     
       public static void  main(String[] args) {
   		new GProzor();
   	}
