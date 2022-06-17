@@ -36,11 +36,6 @@ public class Render {
 	public void setNaziv(String naziv) {
 		Naziv = naziv;
 	} 
-	@Override
-	public String toString() {
-		return  "Render: "+Naziv+" "+Kamere+" "+Materijali+" "+Objekti;
-		
-	}
 
 
 }
