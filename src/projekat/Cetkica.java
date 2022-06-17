@@ -30,6 +30,10 @@ public class Cetkica {
 	public void setBoje(Color boje) {
 		this.boje = boje;
 	}
+	@Override
+	public String toString() {
+		return  "Cetkica: "+Naziv + " "+ Namene;
+	}
 	
 
 }
