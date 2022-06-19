@@ -7,7 +7,6 @@ import java.awt.Insets;
 
 import javax.swing.Icon;
 
-//http://www.java2s.com/Code/Java/2D-Graphics-GUI/ColorIcon.htm
 public class ColorIcon implements Icon
 {
   private int iWidth;
@@ -17,22 +16,16 @@ public class ColorIcon implements Icon
   private Color  border;
   private Insets insets;
 
-  //---------------------------------------------------------------------------
-
   public ColorIcon()
   {
     this(32, 16);
   }
 
-  //---------------------------------------------------------------------------
-
   public ColorIcon(int width, int height)
   {
     this(width, height, Color.black);
   }
-
-  //---------------------------------------------------------------------------
-
+  
   public ColorIcon(int width, int height, Color c)
   {
     iWidth  = width;
@@ -43,21 +36,15 @@ public class ColorIcon implements Icon
     insets  = new Insets(1,1,1,1);
   }
 
-  //---------------------------------------------------------------------------
-
   public void setColor(Color c)
   {
     color = c;
   }
 
-  //---------------------------------------------------------------------------
-
   public Color getColor()
   {
     return color;
   }
-
-  //---------------------------------------------------------------------------
 
   public void setBorderColor(Color c)
   {
@@ -70,14 +57,10 @@ public class ColorIcon implements Icon
     return iWidth;
   }
 
-  //---------------------------------------------------------------------------
-
   public int getIconHeight()
   {
     return iHeight;
   }
-
-  //---------------------------------------------------------------------------
 
   public void paintIcon(Component c, Graphics g, int x, int y)
   {

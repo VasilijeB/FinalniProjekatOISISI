@@ -1,38 +1,26 @@
 package projekat;
 
 import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.HeadlessException;
-import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.KeyEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.*;
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 public class GProzor extends JFrame {
-
 
 	public GProzor() throws HeadlessException {
 
@@ -46,36 +34,27 @@ public class GProzor extends JFrame {
 		del = new ImageIcon(GProzor.class.getResource("/resources/del1.jpg"));
 		toolbar.setSize(new Dimension(screenSize.width, screenSize.height / 100));
 		softverL.setCellRenderer(new SRenderer());
-
-
-
+		
 		this.populate();
 
 		populateZaposleni();
 		populateSoftver();
-
 		setLocationRelativeTo(null);
 		setVisible(true);
-
-
 	}
 
 	ImageIcon ad, ed, del;
 	JTabbedPane tabbedPane = new JTabbedPane();
 
-
 	JComponent panel1 = new JPanel();
 	JComponent panel2 = new JPanel();
-
 	JPanel cenpanel = new JPanel();
 	JMenuBar meni = new JMenuBar();
 	JMenu file, edit, help, open;
 	JMenuItem neww, exit, editt, delte, about, zap, sof;
 	JToolBar toolbar = new JToolBar();
 
-
 	JColorChooser izaberiBoju = new JColorChooser();
-
 	JDialog dodajZ;
 	JDialog dodSof;
 
@@ -86,7 +65,6 @@ public class GProzor extends JFrame {
 	JFormattedTextField datum = new JFormattedTextField(date);
 
 	JDialog obrisi = new JDialog();
-
 	JLabel im = new JLabel("Ime", JLabel.TRAILING), pr = new JLabel("Prezime", JLabel.TRAILING),
 			jmb = new JLabel("JMBG", JLabel.TRAILING), em = new JLabel("Email", JLabel.TRAILING),
 			dat = new JLabel("Datum rodjenja", JLabel.TRAILING);
@@ -107,8 +85,6 @@ public class GProzor extends JFrame {
 	JList softverL = new JList(modelS);
 
 	public void populate() {
-
-
 		file = new JMenu("File");
 		edit = new JMenu("Edit");
 		help = new JMenu("Help");
@@ -135,12 +111,41 @@ public class GProzor extends JFrame {
 
 		JPanel dugmici = new JPanel();
 
-
 		zap.addActionListener(ae -> {
 			tabbedPane.setSelectedComponent(panel1);
 		});
 		sof.addActionListener(ae -> {
 			tabbedPane.setSelectedComponent(panel2);
+		});
+		
+		editt.addActionListener(ae -> {
+			if (!zaposleniL.isSelectionEmpty()) {
+				Zaposleni zaposl = (Zaposleni) zaposleniL.getSelectedValue();
+				ime.setText(zaposl.getIme());
+				prezime.setText(zaposl.getPrezime());
+				email.setText(zaposl.getEmail());
+				jmbg.setText(zaposl.getJmbg());
+				DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy.");
+				String strDate = dateFormat.format(zaposl.getDatumrodjenja());
+				datum.setText(strDate);
+				broj.setText(zaposl.getAdrStanovanja().getBroj());
+				grad.setText(zaposl.getAdrStanovanja().getGrad());
+				ulica.setText(zaposl.getAdrStanovanja().getGrad());
+				dodajZ.setVisible(true);
+			}
+			if (!softverL.isSelectionEmpty()) {
+				Softver s = (Softver) softverL.getSelectedValue();
+				nS.setText(s.getNaziv());
+				nC.setText(s.getCetkice().getNaziv());
+				nR.setText(s.getRender().getNaziv());
+				kamere.setText(s.getRender().getKamere());
+				materijali.setText(s.getRender().getMaterijali());
+				objektiv.setText(s.getRender().getObjekti());
+				namena.setText(s.getCetkice().getNamene());
+				fajl.setText(s.getFormati());
+				alat.setText(s.getAlat());
+				dodSof.setVisible(true);
+			}
 		});
 
 		exit.addActionListener(new ActionListener() {
@@ -150,7 +155,6 @@ public class GProzor extends JFrame {
 			}
 		});
 
-
 		neww.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -159,20 +163,14 @@ public class GProzor extends JFrame {
 
 			}
 		});
-
-
+		
 		panel1.add(zaposleniL);
 		tabbedPane.addTab("Zaposleni", panel1);
 
 		panel2.add(softverL);
-		
-		tabbedPane.addTab("Softver", panel2);
+		tabbedPane.addTab("Softveri", panel2);
 
 		this.add(tabbedPane);
-
-
-//		******* 
-
 		ImageIcon img = new ImageIcon("jaa");
 		img.paintIcon(dugmici, getGraphics(), EXIT_ON_CLOSE, ABORT);
 
@@ -188,16 +186,44 @@ public class GProzor extends JFrame {
 
 			}
 		});
+		
+		edact.addActionListener(ae -> {
+			if (!zaposleniL.isSelectionEmpty()) {
+				Zaposleni zaposl = (Zaposleni) zaposleniL.getSelectedValue();
+				ime.setText(zaposl.getIme());
+				prezime.setText(zaposl.getPrezime());
+				email.setText(zaposl.getEmail());
+				jmbg.setText(zaposl.getJmbg());
+				DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy.");
+				String strDate = dateFormat.format(zaposl.getDatumrodjenja());
+				datum.setText(strDate);
+				broj.setText(zaposl.getAdrStanovanja().getBroj());
+				grad.setText(zaposl.getAdrStanovanja().getGrad());
+				ulica.setText(zaposl.getAdrStanovanja().getGrad());
+				dodajZ.setVisible(true);
+			}
+			if (!softverL.isSelectionEmpty()) {
+				Softver s = (Softver) softverL.getSelectedValue();
+				nS.setText(s.getNaziv());
+				nC.setText(s.getCetkice().getNaziv());
+				nR.setText(s.getRender().getNaziv());
+				kamere.setText(s.getRender().getKamere());
+				materijali.setText(s.getRender().getMaterijali());
+				objektiv.setText(s.getRender().getObjekti());
+				namena.setText(s.getCetkice().getNamene());
+				fajl.setText(s.getFormati());
+				alat.setText(s.getAlat());
+				dodSof.setVisible(true);
+			}
 
+		});
 		toolbar.add(adact);
 		toolbar.add(edact);
 		toolbar.add(delact);
 		this.add(toolbar, BorderLayout.NORTH);
-
 	}
 
 	public void populateZaposleni() {
-		
 		dodajZ = new JDialog();
 		dodajZ.setModal(true);
 		dodajZ.setSize(500, 500);
@@ -208,7 +234,6 @@ public class GProzor extends JFrame {
 		prezime = new JTextField(15);
 		jmbg = new JTextField(13);
 		email = new JTextField(20);
-		
 		DateFormat df = new SimpleDateFormat("dd.mm.yyyy.");
 		datum = new JFormattedTextField(df);
 		ulica = new JTextField(15);
@@ -218,13 +243,11 @@ public class GProzor extends JFrame {
 
 			@Override
 			public void focusGained(FocusEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				
 				JDialog error = new JDialog();
 				error.setSize(500, 500);
 				error.setModal(true);
@@ -279,7 +302,12 @@ public class GProzor extends JFrame {
 				6, 6);
 
 		ok.addActionListener(ae -> {
-			dodajZ();
+			if (!zaposleniL.isSelectionEmpty()) {
+				izmeniZ((Zaposleni) zaposleniL.getSelectedValue());
+
+			} else {
+				dodajZ();
+			}
 			dodajZ.dispose();
 		});
 
@@ -289,10 +317,7 @@ public class GProzor extends JFrame {
 		});
 	}
 
-
-
 	public void populateSoftver() {
-//		*******
 		dodSof = new JDialog();
 		dodSof.setModal(true);
 		dodSof.setSize(500, 500);
@@ -344,7 +369,6 @@ public class GProzor extends JFrame {
 
 			@Override
 			public void focusGained(FocusEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
@@ -374,11 +398,15 @@ public class GProzor extends JFrame {
 		new SpringUtilities().makeCompactGrid(p1, 9, 2, // rows, cols
 				6, 6, // initX, initY
 				6, 6);
-//		*******
-
+		
 		ok.addActionListener(ae -> {
-			dodajS();
+			if (!softverL.isSelectionEmpty()) {
+				izmeniS((Softver) softverL.getSelectedValue());
+			} else {
+				dodajS();
+			}
 			dodSof.dispose();
+
 		});
 		
 		can.addActionListener(ae -> {
@@ -387,7 +415,6 @@ public class GProzor extends JFrame {
 		});
 
 	}
-
 
 	public void dodajZ() {
 		Adresa a = new Adresa(broj.getText(), ulica.getText(), grad.getText());
@@ -399,26 +426,58 @@ public class GProzor extends JFrame {
 		Zaposleni z = new Zaposleni(ime.getText(), prezime.getText(), jmbg.getText(), dat1, email.getText(), a);
 		zaposleni.add(z);
 		modelZ.addElement(z);
-
-
+		
 		tabbedPane.setSelectedComponent(panel1);
-
 	}
 
 	public void dodajS() {
-
 		Color boja = izaberiBoju.showDialog(dodSof, "Izaberi boju cetkice", colorCetkica);
 		Cetkica cetka = new Cetkica(nS.getText(), namena.getText(), boja);
 		Render ren = new Render(materijali.getText(), kamere.getText(), objektiv.getText(), nR.getText());
 		Softver s = new Softver(nS.getText(), cetka, alat.getText(), fajl.getText(), ren);
 		softveri.add(s);
 		modelS.addElement(s);
-
+		tabbedPane.setSelectedComponent(panel2);
+	}
+	
+	public void izmeniZ(Zaposleni z) {
+		Zaposleni izmena = zaposleni.get(zaposleni.indexOf(z));
+		izmena.setIme(ime.getText());
+		izmena.setPrezime(prezime.getText());
+		izmena.setJmbg(jmbg.getText());
+		izmena.setEmail(email.getText());
+		Adresa a = new Adresa(broj.getText(), ulica.getText(), grad.getText());
+		String dat = datum.getText();
+		int g = Integer.parseInt(dat.substring(6, 10));
+		int m = Integer.parseInt(dat.substring(3, 5));
+		int d = Integer.parseInt(dat.substring(0, 2));
+		LocalDate dat1 = LocalDate.of(g, m, d);
+		izmena.setDatumrodjenja(dat1);
+		izmena.setAdrStanovanja(a);
+		int i1 = zaposleni.indexOf(z);
+		int i2 = modelZ.indexOf(z);
+		zaposleni.set(i1, izmena);
+		modelZ.setElementAt(izmena, i2);
+		zaposleniL.clearSelection();
+		tabbedPane.setSelectedComponent(panel1);
+	}
+	
+	public void izmeniS(Softver s) {
+		Softver izmena = softveri.get(softveri.indexOf(s));
+		Color boja = izaberiBoju.showDialog(dodSof, "Izaberi boju cetkice", izmena.getCetkice().getBoje());
+		izmena.setCetkice(new Cetkica(nS.getText(), namena.getText(), boja));
+		izmena.setRender(new Render(materijali.getText(), kamere.getText(), objektiv.getText(), nR.getText()));
+		izmena.setAlat(alat.getText());
+		izmena.setFormati(fajl.getText());
+		izmena.setNaziv(nS.getText());
+		int i1 = softveri.indexOf(s);
+		int i2 = modelS.indexOf(s);
+		softveri.set(i1, izmena);
+		modelS.setElementAt(izmena, i2);
+		softverL.clearSelection();
 		tabbedPane.setSelectedComponent(panel2);
 
-
 	}
-
 
 	public class SRenderer extends JLabel implements ListCellRenderer<Softver> {
 
@@ -428,12 +487,10 @@ public class GProzor extends JFrame {
 			ColorIcon ikonica = new ColorIcon(10, 10, s.getCetkice().getBoje());
 			setIcon(ikonica);
 			setText(s.toString());
-
 			return this;
 		}
 
 	}
-
 
 	public static void main(String[] args) {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
