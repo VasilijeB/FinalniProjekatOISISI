@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -14,6 +15,7 @@ import java.awt.event.FocusListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -109,7 +111,14 @@ public class GProzor extends JFrame {
 		meni.add(help);
 		this.setJMenuBar(meni);
 
+		JLabel brisanje = new JLabel("Klikom na OK cete obrisati izabranu stavku!");
+		
 		JPanel dugmici = new JPanel();
+		
+		obrisi.setSize(500, 500);
+
+		JButton okBrisi = new JButton("OK");
+		JButton otkaziBrisanje = new JButton("Cancel");
 
 		zap.addActionListener(ae -> {
 			tabbedPane.setSelectedComponent(panel1);
@@ -117,6 +126,39 @@ public class GProzor extends JFrame {
 		sof.addActionListener(ae -> {
 			tabbedPane.setSelectedComponent(panel2);
 		});
+		
+		about.addActionListener(ae -> {
+			JDialog oNama = new JDialog();
+			oNama.setSize(500, 500);
+			JLabel opis = new JLabel("Grupa studenata koja je radila projekat studira na Fakultetu Tehnickih Nauka u Novom Sadu. Grupu cine Vasilije Blagojevic, Lazar Isailovic, Lidija Nikolic i Anabela Stosic. Svi su kreativni i planiraju da se zaposle u gejming ili filmskoj industriji.");
+			oNama.add(opis, BorderLayout.NORTH);
+			oNama.setVisible(true);
+		});
+		
+		okBrisi.addActionListener(ae -> {
+			if (!zaposleniL.isSelectionEmpty()) {
+				Zaposleni z = (Zaposleni) zaposleniL.getSelectedValue();
+				obrisiZ(z);
+
+			}
+			if (!softverL.isSelectionEmpty()) {
+				Softver s = (Softver) softverL.getSelectedValue();
+				obrisiS(s);
+
+			}
+			obrisi.dispose();
+
+		});
+
+		otkaziBrisanje.addActionListener(ae -> {
+			obrisi.dispose();
+
+		});
+		
+		dugmici.add(okBrisi);
+		dugmici.add(otkaziBrisanje);
+		obrisi.add(brisanje, BorderLayout.CENTER);
+		obrisi.add(dugmici, BorderLayout.SOUTH);
 		
 		editt.addActionListener(ae -> {
 			if (!zaposleniL.isSelectionEmpty()) {
@@ -154,6 +196,11 @@ public class GProzor extends JFrame {
 
 			}
 		});
+		
+		delte.addActionListener(ae -> {
+			obrisi.setVisible(true);
+
+		});
 
 		neww.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -177,6 +224,14 @@ public class GProzor extends JFrame {
 		JButton adact = new JButton(ad);
 		JButton edact = new JButton(ed);
 		JButton delact = new JButton(del);
+		
+		JPanel statusBar = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		JLabel datum1 = new JLabel();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy.");
+		LocalDateTime now = LocalDateTime.now();
+		datum1.setText(dtf.format(now));
+		statusBar.add(datum1);
+		this.add(statusBar, BorderLayout.SOUTH);
 
 		adact.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -185,6 +240,10 @@ public class GProzor extends JFrame {
 				dodSof.setVisible(true);
 
 			}
+		});
+		
+		delact.addActionListener(ae -> {
+			obrisi.setVisible(true);
 		});
 		
 		edact.addActionListener(ae -> {
@@ -221,6 +280,27 @@ public class GProzor extends JFrame {
 		toolbar.add(edact);
 		toolbar.add(delact);
 		this.add(toolbar, BorderLayout.NORTH);
+	}
+	
+	public void clearFields() {
+		ime.setText("");
+		prezime.setText("");
+		jmbg.setText("");
+		email.setText("");
+		datum.setText("");
+		ulica.setText("");
+		broj.setText("");
+		grad.setText("");
+		nS.setText("");
+		nC.setText("");
+		nR.setText("");
+		kamere.setText("");
+		materijali.setText("");
+		objektiv.setText("");
+		namena.setText("");
+		fajl.setText("");
+		alat.setText("");
+
 	}
 
 	public void populateZaposleni() {
@@ -314,6 +394,7 @@ public class GProzor extends JFrame {
 		can.addActionListener(ae -> {
 			dodajZ.dispose();
 			zaposleniL.clearSelection();
+			clearFields();
 		});
 	}
 
@@ -412,6 +493,7 @@ public class GProzor extends JFrame {
 		can.addActionListener(ae -> {
 			dodSof.dispose();
 			softverL.clearSelection();
+			clearFields();
 		});
 
 	}
@@ -426,7 +508,7 @@ public class GProzor extends JFrame {
 		Zaposleni z = new Zaposleni(ime.getText(), prezime.getText(), jmbg.getText(), dat1, email.getText(), a);
 		zaposleni.add(z);
 		modelZ.addElement(z);
-		
+		clearFields();
 		tabbedPane.setSelectedComponent(panel1);
 	}
 
@@ -437,6 +519,7 @@ public class GProzor extends JFrame {
 		Softver s = new Softver(nS.getText(), cetka, alat.getText(), fajl.getText(), ren);
 		softveri.add(s);
 		modelS.addElement(s);
+		clearFields();
 		tabbedPane.setSelectedComponent(panel2);
 	}
 	
@@ -459,6 +542,7 @@ public class GProzor extends JFrame {
 		zaposleni.set(i1, izmena);
 		modelZ.setElementAt(izmena, i2);
 		zaposleniL.clearSelection();
+		clearFields();
 		tabbedPane.setSelectedComponent(panel1);
 	}
 	
@@ -475,6 +559,21 @@ public class GProzor extends JFrame {
 		softveri.set(i1, izmena);
 		modelS.setElementAt(izmena, i2);
 		softverL.clearSelection();
+		clearFields();
+		tabbedPane.setSelectedComponent(panel2);
+
+	}
+	
+	public void obrisiZ(Zaposleni z) {
+		zaposleni.remove(z);
+		modelZ.removeElement(z);
+		tabbedPane.setSelectedComponent(panel1);
+
+	}
+	
+	public void obrisiS(Softver s) {
+		softveri.remove(s);
+		modelS.removeElement(s);
 		tabbedPane.setSelectedComponent(panel2);
 
 	}
