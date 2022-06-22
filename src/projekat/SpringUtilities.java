@@ -2,6 +2,8 @@ package projekat;
 import java.awt.*;
 import javax.swing.*;
 
+//https://docs.oracle.com/javase/tutorial/uiswing/examples/layout/SpringGridProject/src/layout/SpringUtilities.java
+
 public class SpringUtilities {
 	/**
      * A debugging utility that prints to stdout the component's

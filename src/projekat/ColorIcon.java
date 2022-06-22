@@ -7,6 +7,8 @@ import java.awt.Insets;
 
 import javax.swing.Icon;
 
+//http://www.java2s.com/Code/Java/2D-Graphics-GUI/ColorIcon.htm
+
 public class ColorIcon implements Icon
 {
   private int iWidth;

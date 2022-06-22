@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -22,6 +23,8 @@ import java.util.List;
 
 import javax.swing.*;
 
+import projekat.Zaposleni.radnoMesto;
+
 public class GProzor extends JFrame {
 
 	public GProzor() throws HeadlessException {
@@ -31,6 +34,7 @@ public class GProzor extends JFrame {
 		pack();
 		setSize(screenSize.width * 3 / 4, screenSize.height * 3 / 4);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// kreira slicice
 		ad = new ImageIcon(GProzor.class.getResource("/resources/ad1.jpg"));
 		ed = new ImageIcon(GProzor.class.getResource("/resources/ed1.jpg"));
 		del = new ImageIcon(GProzor.class.getResource("/resources/del1.jpg"));
@@ -55,17 +59,23 @@ public class GProzor extends JFrame {
 	JMenu file, edit, help, open;
 	JMenuItem neww, exit, editt, delte, about, zap, sof;
 	JToolBar toolbar = new JToolBar();
+	
+	JRadioButton mod=new JRadioButton("modelator"),anim=new JRadioButton("animator"),il=new JRadioButton("ilustrator"),rig=new JRadioButton("riger");
+    ButtonGroup mesta=new ButtonGroup();
 
+    
 	JColorChooser izaberiBoju = new JColorChooser();
 	JDialog dodajZ;
 	JDialog dodSof;
-
+	
+	
 	JTextField ime, prezime, jmbg, email, ulica, broj, grad;
 	JTextField nS, nC, nR, kamere, materijali, objektiv, namena, fajl, alat;
 	Color colorCetkica;
 	DateFormat date = new SimpleDateFormat("dd.MM.yyyy.");
 	JFormattedTextField datum = new JFormattedTextField(date);
 
+	
 	JDialog obrisi = new JDialog();
 	JLabel im = new JLabel("Ime", JLabel.TRAILING), pr = new JLabel("Prezime", JLabel.TRAILING),
 			jmb = new JLabel("JMBG", JLabel.TRAILING), em = new JLabel("Email", JLabel.TRAILING),
@@ -79,14 +89,19 @@ public class GProzor extends JFrame {
 	JLabel nazR = new JLabel("Naziv Rendera", JLabel.TRAILING), mat = new JLabel("Materijali", JLabel.TRAILING),
 			kam = new JLabel("Kamere", JLabel.TRAILING), obj = new JLabel("Objektiv", JLabel.TRAILING);
 
+	
 	List<Zaposleni> zaposleni = new ArrayList<Zaposleni>();
 	DefaultListModel modelZ = new DefaultListModel();
 	JList zaposleniL = new JList(modelZ);
 	List<Softver> softveri = new ArrayList<Softver>();
 	DefaultListModel modelS = new DefaultListModel();
 	JList softverL = new JList(modelS);
+	
+	// https://stackoverflow.com/questions/13843325/display-items-in-jlist
 
 	public void populate() {
+		
+		
 		file = new JMenu("File");
 		edit = new JMenu("Edit");
 		help = new JMenu("Help");
@@ -111,6 +126,7 @@ public class GProzor extends JFrame {
 		meni.add(help);
 		this.setJMenuBar(meni);
 
+		
 		JLabel brisanje = new JLabel("Klikom na OK cete obrisati izabranu stavku!");
 		
 		JPanel dugmici = new JPanel();
@@ -130,7 +146,9 @@ public class GProzor extends JFrame {
 		about.addActionListener(ae -> {
 			JDialog oNama = new JDialog();
 			oNama.setSize(500, 500);
-			JLabel opis = new JLabel("Grupa studenata koja je radila projekat studira na Fakultetu Tehnickih Nauka u Novom Sadu. Grupu cine Vasilije Blagojevic, Lazar Isailovic, Lidija Nikolic i Anabela Stosic. Svi su kreativni i planiraju da se zaposle u gejming ili filmskoj industriji.");
+			JLabel opis = new JLabel("<html>Grupa studenata koja je radila projekat studira na Fakultetu Tehnickih Nauka"
+					+ " u Novom Sadu. Grupu cine Vasilije Blagojevic, Lazar Isailovic, Lidija Nikolic i Anabela Stosic."
+					+ " Svi su kreativni i planiraju da se zaposle u gejming ili filmskoj industriji.</html>");
 			oNama.add(opis, BorderLayout.NORTH);
 			oNama.setVisible(true);
 		});
@@ -150,6 +168,7 @@ public class GProzor extends JFrame {
 
 		});
 
+		
 		otkaziBrisanje.addActionListener(ae -> {
 			obrisi.dispose();
 
@@ -173,6 +192,15 @@ public class GProzor extends JFrame {
 				broj.setText(zaposl.getAdrStanovanja().getBroj());
 				grad.setText(zaposl.getAdrStanovanja().getGrad());
 				ulica.setText(zaposl.getAdrStanovanja().getGrad());
+				
+			
+				String rad=zaposl.getRadnoM().name();
+				if(rad.equals("modelator"))mod.setSelected(true);
+				else if(rad.equals("animator"))anim.setSelected(true);
+				else if(rad.equals("riger"))rig.setSelected(true);
+				else il.setSelected(true);
+		
+				
 				dodajZ.setVisible(true);
 			}
 			if (!softverL.isSelectionEmpty()) {
@@ -221,6 +249,7 @@ public class GProzor extends JFrame {
 		ImageIcon img = new ImageIcon("jaa");
 		img.paintIcon(dugmici, getGraphics(), EXIT_ON_CLOSE, ABORT);
 
+		
 		JButton adact = new JButton(ad);
 		JButton edact = new JButton(ed);
 		JButton delact = new JButton(del);
@@ -246,6 +275,7 @@ public class GProzor extends JFrame {
 			obrisi.setVisible(true);
 		});
 		
+		
 		edact.addActionListener(ae -> {
 			if (!zaposleniL.isSelectionEmpty()) {
 				Zaposleni zaposl = (Zaposleni) zaposleniL.getSelectedValue();
@@ -259,6 +289,15 @@ public class GProzor extends JFrame {
 				broj.setText(zaposl.getAdrStanovanja().getBroj());
 				grad.setText(zaposl.getAdrStanovanja().getGrad());
 				ulica.setText(zaposl.getAdrStanovanja().getGrad());
+				
+
+				String rad=zaposl.getRadnoM().name();
+				if(rad.equals("modelator"))mod.setSelected(true);
+				else if(rad.equals("animator"))anim.setSelected(true);
+				else if(rad.equals("riger"))rig.setSelected(true);
+				else il.setSelected(true);
+
+				
 				dodajZ.setVisible(true);
 			}
 			if (!softverL.isSelectionEmpty()) {
@@ -283,6 +322,8 @@ public class GProzor extends JFrame {
 	}
 	
 	public void clearFields() {
+		
+		
 		ime.setText("");
 		prezime.setText("");
 		jmbg.setText("");
@@ -304,6 +345,9 @@ public class GProzor extends JFrame {
 	}
 
 	public void populateZaposleni() {
+		
+		// https://docs.oracle.com/javase/tutorial/displayCode.html?code=https://docs.oracle.com/javase/tutorial/uiswing/examples/layout/SpringFormProject/src/layout/SpringForm.java
+		
 		dodajZ = new JDialog();
 		dodajZ.setModal(true);
 		dodajZ.setSize(500, 500);
@@ -314,6 +358,9 @@ public class GProzor extends JFrame {
 		prezime = new JTextField(15);
 		jmbg = new JTextField(13);
 		email = new JTextField(20);
+		
+		// https://stackoverflow.com/questions/13927650/how-to-take-date-in-text-field
+		
 		DateFormat df = new SimpleDateFormat("dd.mm.yyyy.");
 		datum = new JFormattedTextField(df);
 		ulica = new JTextField(15);
@@ -375,11 +422,32 @@ public class GProzor extends JFrame {
 		p12.add(grad);
 		p2.add(ok);
 		p2.add(can);
-		dodajZ.add(p12);
-		dodajZ.add(p2, BorderLayout.SOUTH);
-		new SpringUtilities().makeCompactGrid(p12, 8, 2, // rows, cols
-				6, 6, // initX, initY
-				6, 6);
+		
+
+		mesta.add(mod);
+      	mesta.add(rig);
+      	mesta.add(anim);
+      	mesta.add(il);
+      	
+      	JLabel radnom=new JLabel("Radno mesto");
+    	JPanel radioPanel = new JPanel();
+        radioPanel.setLayout(new GridLayout(2,2));
+    	p12.add(radnom);
+    	radioPanel.add(mod);
+    	radioPanel.add(rig);
+    	radioPanel.add(anim);
+    	radioPanel.add(il);
+    	p12.add(radioPanel);
+    	dodajZ.add(p12);
+    	dodajZ.add(p2,BorderLayout.SOUTH);
+    	
+    	new SpringUtilities().makeCompactGrid(p12,
+                9, 2, //rows, cols
+                6, 6,        //initX, initY
+                6, 6); 
+
+    	
+    	
 
 		ok.addActionListener(ae -> {
 			if (!zaposleniL.isSelectionEmpty()) {
@@ -497,6 +565,7 @@ public class GProzor extends JFrame {
 		});
 
 	}
+	
 
 	public void dodajZ() {
 		Adresa a = new Adresa(broj.getText(), ulica.getText(), grad.getText());
@@ -508,6 +577,17 @@ public class GProzor extends JFrame {
 		Zaposleni z = new Zaposleni(ime.getText(), prezime.getText(), jmbg.getText(), dat1, email.getText(), a);
 		zaposleni.add(z);
 		modelZ.addElement(z);
+		
+
+		if(mod.isSelected()) {
+			z.setRadnoM(radnoMesto.modelator);
+		}else if(rig.isSelected()) {
+			z.setRadnoM(radnoMesto.riger);
+		}else if(anim.isSelected()) {
+			z.setRadnoM(radnoMesto.animator);
+		}else z.setRadnoM(radnoMesto.ilustrator);
+
+		
 		clearFields();
 		tabbedPane.setSelectedComponent(panel1);
 	}
@@ -542,6 +622,17 @@ public class GProzor extends JFrame {
 		zaposleni.set(i1, izmena);
 		modelZ.setElementAt(izmena, i2);
 		zaposleniL.clearSelection();
+		
+
+		if(mod.isSelected()) {
+			z.setRadnoM(radnoMesto.modelator);
+		}else if(rig.isSelected()) {
+			z.setRadnoM(radnoMesto.riger);
+		}else if(anim.isSelected()) {
+			z.setRadnoM(radnoMesto.animator);
+		}else z.setRadnoM(radnoMesto.ilustrator);
+
+		
 		clearFields();
 		tabbedPane.setSelectedComponent(panel1);
 	}
@@ -578,6 +669,8 @@ public class GProzor extends JFrame {
 
 	}
 
+	// https://www.codejava.net/java-se/swing/jlist-custom-renderer-example
+	
 	public class SRenderer extends JLabel implements ListCellRenderer<Softver> {
 
 		@Override
